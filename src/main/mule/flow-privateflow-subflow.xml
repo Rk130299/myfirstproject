@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a949ffdf-ffc3-4680-ba65-34bd1f5389b2" >
+		<http:listener-connection host="${secure::http.host}" port="${secure::http.port}" />
+	</http:listener-config>
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="e3039b9b-0a61-4369-982f-db989fd08634" file="dev.yaml" key="abcdef0123456789" />
+	<flow name="Flow" doc:id="0d0ce588-2f58-4f2e-9ecb-50e2e1f0b7dc" >
+		<http:listener doc:name="Listener" doc:id="7af64743-5d31-45d8-89e2-6a85c44a859c" config-ref="HTTP_Listener_config" path="${secure::http.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c2be300c-9767-48b0-a664-cf673d94c853" message="${secure::http.port}"/>
+		<set-payload value='#["Hello World"]' doc:name="Set Payload" doc:id="62114472-663d-4c92-b816-a50dd12e6cd2" />
+		<logger level="INFO" doc:name="Logger" doc:id="bacd4c27-bffe-4aea-809f-2d20a762caa5" message='#[payload]'/>
+		<flow-ref doc:name="Flow Reference" doc:id="dd82d411-691e-44da-863b-e6b2f97a0c61" name="private_flow"/>
+	</flow>
+	<flow name="private_flow" doc:id="12bc0087-f435-4f9a-855b-b347816df008" >
+		<set-payload value='#["My Name is Rohan"]' doc:name="Set Payload" doc:id="0dacba4f-f3e8-4f88-80c8-9dfecd162e9e" />
+		<logger level="INFO" doc:name="Logger" doc:id="596c7811-171f-4611-8bcb-d9412084779d" message='#[payload]'/>
+	</flow>
+	<sub-flow name="sub_flow" doc:id="13136993-77ba-4c7e-8b33-9c9ee5777f44" >
+		<try doc:name="Try" doc:id="12f56266-53a3-425b-aa31-d3a283fd5c3a" >
+			<set-payload value='#["I am Software Engineer"]' doc:name="Set Payload" doc:id="5ed3b4c2-7fc0-4348-8d56-f73aa6658a63" />
+			<logger level="INFO" doc:name="Logger" doc:id="dea7ae38-13d0-40a9-9156-692f2f360244" message="#[payload]" />
+		</try>
+	</sub-flow>
+</mule>
