@@ -15,6 +15,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 		<set-payload value='#["Hello World"]' doc:name="Set Payload" doc:id="62114472-663d-4c92-b816-a50dd12e6cd2" />
 		<logger level="INFO" doc:name="Logger" doc:id="bacd4c27-bffe-4aea-809f-2d20a762caa5" message='#[payload]'/>
 		<flow-ref doc:name="Flow Reference" doc:id="dd82d411-691e-44da-863b-e6b2f97a0c61" name="private_flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="45d5acce-9b56-4d41-ba04-0f1f1e6a0605" message="#[payload]"/>
 	</flow>
 	<flow name="private_flow" doc:id="12bc0087-f435-4f9a-855b-b347816df008" >
 		<set-payload value='#["My Name is Rohan"]' doc:name="Set Payload" doc:id="0dacba4f-f3e8-4f88-80c8-9dfecd162e9e" />
